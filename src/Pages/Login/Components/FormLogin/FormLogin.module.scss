@@ -1,0 +1,22 @@
+@import '../../../../Data/Variables.scss';
+
+.form-title {
+  font-size: 1rem;
+  color: $Black;
+}
+
+.btn-login {
+  width: 100%;
+  background: $PrimaryGreen;
+  font-weight: 500;
+}
+
+.form-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+  .text-link {
+    color: $GreyPrimary;
+  }
+}
