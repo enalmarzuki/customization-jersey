@@ -13,6 +13,7 @@
     "antd": "^4.21.0",
     "axios": "^0.27.2",
     "fabric": "^5.2.1",
+    "fabricjs-react": "^1.0.8",
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
     "moment": "^2.29.3",
@@ -52,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/fabric": "^4.5.8"
   }
 }

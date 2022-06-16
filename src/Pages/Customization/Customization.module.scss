@@ -1,0 +1,13 @@
+@import '../../Data/Variables.scss';
+
+.container {
+  .canvas-wrapper {
+    height: 80vh;
+    background: $GreyPrimary;
+
+    .canvas-preview {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
