@@ -1,5 +1,6 @@
 import { Card, Col, Row, Typography } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router';
 import IMGHome from '../../Assets/images/img-home.png';
 import Gap from '../../Components/Reusables/Gap';
 import Layout from '../../Components/Reusables/Layout';
@@ -12,6 +13,8 @@ const { Title } = Typography;
 const { Meta } = Card;
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={Styles['container']}>
       <Navbar isActive={'Home'} />
@@ -24,6 +27,7 @@ const Home: React.FC = () => {
             <Card
               hoverable
               className={Styles['card-custom']}
+              onClick={() => navigate('/motive')}
               cover={
                 <img
                   src={IMGHome}
