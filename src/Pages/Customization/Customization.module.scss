@@ -3,11 +3,42 @@
 .container {
   .canvas-wrapper {
     height: 80vh;
-    background: $GreyPrimary;
+    background: '#F6F6F6';
 
     .canvas-preview {
       height: 100%;
       width: 100%;
     }
+  }
+
+  .neck-wrapper,
+  .neck-wrapper-is-active {
+    height: 150px;
+    width: 150px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f6f6f6;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      background: rgb(199, 199, 199);
+    }
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .neck-wrapper-is-active {
+    border: $PrimaryGreen 3px solid;
+    background: rgb(199, 199, 199);
+    transition: all 0.3s ease-in-out;
   }
 }

@@ -1,6 +1,7 @@
 import IMGRekomendasi1 from '../img-rekomendasi-2.png';
 import IMGRekomendasi2 from '../img-rekomendasi-2.png';
 import IMGRekomendasi3 from '../img-rekomendasi-3.png';
+import IMGRekomendasi4 from '../img-canvas.png';
 
 export const ProductRecommendations = [
   {
@@ -19,6 +20,12 @@ export const ProductRecommendations = [
     id: 3,
     image: IMGRekomendasi3,
     alt: 'img-rekomendasi-3.png',
+    link: '/customization',
+  },
+  {
+    id: 4,
+    image: IMGRekomendasi4,
+    alt: 'img-rekomendasi-4.png',
     link: '/customization',
   },
 ];
