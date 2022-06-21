@@ -11,16 +11,10 @@ export interface INavbarProps {
 const Navbar: React.FC<INavbarProps> = () => {
   return (
     <div className={Styles['container']}>
-      <Row justify="space-between">
+      <Row justify="center">
         <Col span={3}>
           <div className={Styles['img-wrapper']}>
             <img src={Logo} alt="logo.png" />
-          </div>
-        </Col>
-
-        <Col span={2} style={{ display: 'flex', justifyContent: 'end' }}>
-          <div className={Styles['img-profil-wrapper']}>
-            <img src={DummyProfile} alt="logo.png" />
           </div>
         </Col>
       </Row>

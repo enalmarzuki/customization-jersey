@@ -1,12 +1,18 @@
-import { Col, Row, Typography } from 'antd';
+import { Button, Col, Row, Typography, Upload, message } from 'antd';
 import { fabric } from 'fabric';
 import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Layout from '../../Components/Reusables/Layout';
 import Navbar from '../../Components/Reusables/Navbar';
-import { NecksJersey } from '../../Data/Dummy/Constans/Customuzation';
+import {
+  ArmJersey,
+  NecksJersey,
+} from '../../Data/Dummy/Constans/Customuzation';
 import Styles from './Customization.module.scss';
+import { UploadOutlined } from '@ant-design/icons';
+import type { UploadProps } from 'antd';
+import Gap from '../../Components/Reusables/Gap';
 
 const { Title } = Typography;
 
@@ -39,12 +45,8 @@ const Customization: React.FC = () => {
     );
   };
 
-  const onAddText = () => {
-    editor?.addText(text);
-    setText('');
-  };
-
   const onUploadImage = (e: any) => {
+    console.log('e.target.files[0]', e.target.files[0]);
     var url = URL.createObjectURL(e.target.files[0]);
     fabric.Image.fromURL(url, (img) => {
       console.log('img >>', img);
@@ -95,36 +97,35 @@ const Customization: React.FC = () => {
     });
   };
 
+  const onDeleteComponent = () => {
+    editor?.canvas.getActiveObjects().forEach((obj) => {
+      editor?.canvas.remove(obj);
+    });
+  };
+
+  useEffect(() => {
+    const objectSelected = editor?.canvas.getActiveObject();
+    objectSelected?.bringToFront();
+  }, [editor]);
+
   return (
     <div className={Styles['container']}>
       <Navbar isActive={'Home'} />
       <Layout>
         <Row>
           <Col span={9}>
-            <fieldset>
-              <input
-                name={`text`}
-                type={`text`}
-                value={text}
-                onChange={(event) => setText(event.target.value)}
+            <div className={Styles['canvas-wrapper']}>
+              <FabricJSCanvas
+                className={Styles['canvas-preview']}
+                onReady={onCanvasReady}
               />
-              <button onClick={onAddText}>Add Text</button>
-            </fieldset>
 
-            <fieldset>
+              <Title level={5}>Masukkan Gambar</Title>
               <input
                 name={`text`}
                 type="file"
                 accept="image/*"
                 onChange={onUploadImage}
-              />
-              <button onClick={onAddText}>Add Text</button>
-            </fieldset>
-
-            <div className={Styles['canvas-wrapper']}>
-              <FabricJSCanvas
-                className={Styles['canvas-preview']}
-                onReady={onCanvasReady}
               />
             </div>
           </Col>
@@ -149,6 +150,32 @@ const Customization: React.FC = () => {
                 </Col>
               ))}
             </Row>
+
+            <Gap height={32} />
+
+            <Title level={3} className={Styles['title-home']}>
+              Pilih Lengan
+            </Title>
+
+            <Row gutter={[24, 24]}>
+              {ArmJersey.map((neck) => (
+                <Col span={8} key={neck.id}>
+                  <div
+                    className={
+                      Styles[
+                        `neck-wrapper${neck.id === active ? '-is-active' : ''}`
+                      ]
+                    }
+                    onClick={(e) => onChooseNeck(e, neck.id)}
+                  >
+                    <img src={neck.image} alt={`img-kerah-${neck.id}.png`} />
+                  </div>
+                </Col>
+              ))}
+            </Row>
+            <Button type="primary" onClick={onDeleteComponent}>
+              Hapus Komponen
+            </Button>
           </Col>
         </Row>
       </Layout>
