@@ -1,24 +1,37 @@
-import { Button, Col, Row, Typography, Upload, message } from 'antd';
+import { Button, Col, Row, Typography } from 'antd';
 import { fabric } from 'fabric';
 import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Gap from '../../Components/Reusables/Gap';
 import Layout from '../../Components/Reusables/Layout';
 import Navbar from '../../Components/Reusables/Navbar';
 import {
   ArmJersey,
+  FontsJersey,
   NecksJersey,
+  NumberJersey,
 } from '../../Data/Dummy/Constans/Customuzation';
+import { ChooseSection } from './Components/ChooseSection/ChooseSection';
 import Styles from './Customization.module.scss';
-import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
-import Gap from '../../Components/Reusables/Gap';
 
 const { Title } = Typography;
+
+export const SECTION_SELECTED = {
+  Arm: 'ARM',
+  Neck: 'NECK',
+  Number: 'NUMBER',
+  Font: 'FONT',
+};
 
 const Customization: React.FC = () => {
   const [text, setText] = useState('');
   const [active, setActive] = useState(0);
+  const [activeNeck, setActiveNeck] = useState(0);
+  const [activeArm, setActiveArm] = useState(0);
+  const [activeNumber, setActiveNumber] = useState(0);
+  const [activeFont, setActiveFont] = useState(0);
+  const [base64Jersey, setBase64Jersey] = useState<any>();
 
   const storeMotive = useSelector((state: any) => state.MotivePageStore);
 
@@ -31,6 +44,8 @@ const Customization: React.FC = () => {
     () => editor?.canvas.height || 0,
     [editor]
   );
+
+  console.log('selectedObjects >>', selectedObjects);
 
   const onCanvasReady = (canvas: any) => {
     fabric.Image.fromURL(
@@ -45,30 +60,10 @@ const Customization: React.FC = () => {
     );
   };
 
-  const onUploadImage = (e: any) => {
-    console.log('e.target.files[0]', e.target.files[0]);
-    var url = URL.createObjectURL(e.target.files[0]);
-    fabric.Image.fromURL(url, (img) => {
-      console.log('img >>', img);
-      const imgWidth = img.width || 0;
-      const imgheight = img.height || 0;
-
-      if (imgWidth > memoizedCanvasWidth || imgheight > memoizedCanvasHeight) {
-        img.scaleToWidth(memoizedCanvasWidth / 2 || 100);
-        img.scaleToHeight(memoizedCanvasHeight / 2 || 100);
-      }
-
-      editor?.canvas.add(img);
-      editor?.canvas.renderAll();
-    });
-  };
-
-  const onChooseNeck = (e: any, id: number) => {
-    const { currentSrc } = e.target;
-    setActive(id);
-
+  const setImageToCanvas = (currentSrc: any) => {
     fabric.Image.fromURL(currentSrc, function (img) {
       let objs = editor?.canvas.getActiveObjects();
+
       const imgWidth = img.width || 0;
       const imgheight = img.height || 0;
 
@@ -97,10 +92,71 @@ const Customization: React.FC = () => {
     });
   };
 
+  const onUploadImage = (e: any) => {
+    console.log('e.target.files[0]', e.target.files[0]);
+    var url = URL.createObjectURL(e.target.files[0]);
+    console.log('url', url);
+    fabric.Image.fromURL(url, (img) => {
+      console.log('img >>', img);
+      const imgWidth = img.width || 0;
+      const imgheight = img.height || 0;
+
+      if (imgWidth > memoizedCanvasWidth || imgheight > memoizedCanvasHeight) {
+        img.scaleToWidth(memoizedCanvasWidth / 2 || 100);
+        img.scaleToHeight(memoizedCanvasHeight / 2 || 100);
+      }
+
+      editor?.canvas.add(img);
+      editor?.canvas.renderAll();
+    });
+  };
+
+  const onChooseChange = (e: any, id: number, selected: string) => {
+    const { currentSrc } = e.target;
+    console.log('currentSrc >>', currentSrc);
+    if (selected === SECTION_SELECTED.Neck) {
+      setActiveNeck(id);
+    } else if (selected === SECTION_SELECTED.Arm) {
+      setActiveArm(id);
+    } else if (selected === SECTION_SELECTED.Number) {
+      setActiveNumber(id);
+    } else {
+      setActiveFont(id);
+    }
+    return setImageToCanvas(currentSrc);
+  };
+
   const onDeleteComponent = () => {
     editor?.canvas.getActiveObjects().forEach((obj) => {
       editor?.canvas.remove(obj);
     });
+  };
+
+  const onClickNext = async () => {
+    setBase64Jersey(
+      editor?.canvas.toDataURL({
+        format: 'png',
+        quality: 0.8,
+      })
+    );
+
+    const tes = JSON.stringify(editor?.canvas.toJSON());
+    const file = new File([tes], 'foo.txt', {
+      type: 'text/plain',
+    });
+
+    // new File([tes], "resultbaju", { lastModified: new Date().getTime(), type: 'image/png' })
+
+    // let blob = new File([tes], { type: 'image/png' });
+    let blob = new File([tes], 'resultbaju', {
+      lastModified: new Date().getTime(),
+      type: 'image/png',
+    });
+
+    const dataUrl = window.URL.createObjectURL(blob);
+
+    console.log('dataUrl >>', dataUrl);
+    console.log('blob >>', blob);
   };
 
   useEffect(() => {
@@ -119,63 +175,85 @@ const Customization: React.FC = () => {
                 className={Styles['canvas-preview']}
                 onReady={onCanvasReady}
               />
-
-              <Title level={5}>Masukkan Gambar</Title>
-              <input
-                name={`text`}
-                type="file"
-                accept="image/*"
-                onChange={onUploadImage}
-              />
             </div>
           </Col>
-          <Col span={12} offset={3}>
-            <Title level={3} className={Styles['title-home']}>
-              Pilih Kerah Jersey
-            </Title>
+          <Col className={Styles['right-content']} span={12} offset={3}>
+            <div>
+              <Title level={3} className={Styles['title-home']}>
+                Masukkan Gambar
+              </Title>
+              <div className={Styles['config-img-wrapper']}>
+                <input
+                  name={`text`}
+                  type="file"
+                  accept="image/*"
+                  onChange={onUploadImage}
+                />
+                <Button danger onClick={onDeleteComponent}>
+                  Hapus Komponen
+                </Button>
+              </div>
+            </div>
+            <Gap height={24} />
 
-            <Row gutter={[24, 24]}>
-              {NecksJersey.map((neck) => (
-                <Col span={8} key={neck.id}>
-                  <div
-                    className={
-                      Styles[
-                        `neck-wrapper${neck.id === active ? '-is-active' : ''}`
-                      ]
-                    }
-                    onClick={(e) => onChooseNeck(e, neck.id)}
-                  >
-                    <img src={neck.image} alt={`img-kerah-${neck.id}.png`} />
-                  </div>
-                </Col>
-              ))}
-            </Row>
+            {/* Choose Neck */}
+            <ChooseSection
+              title="Pilih Kerah Jersey"
+              active={activeNeck}
+              chosed={SECTION_SELECTED.Neck}
+              data={NecksJersey}
+              onChooseChange={onChooseChange}
+            />
 
             <Gap height={32} />
 
-            <Title level={3} className={Styles['title-home']}>
-              Pilih Lengan
-            </Title>
+            {/* Choose Arm */}
+            <ChooseSection
+              title="Pilih Lengan"
+              active={activeArm}
+              chosed={SECTION_SELECTED.Arm}
+              data={ArmJersey}
+              onChooseChange={onChooseChange}
+            />
 
-            <Row gutter={[24, 24]}>
-              {ArmJersey.map((neck) => (
-                <Col span={8} key={neck.id}>
-                  <div
-                    className={
-                      Styles[
-                        `neck-wrapper${neck.id === active ? '-is-active' : ''}`
-                      ]
-                    }
-                    onClick={(e) => onChooseNeck(e, neck.id)}
-                  >
-                    <img src={neck.image} alt={`img-kerah-${neck.id}.png`} />
-                  </div>
-                </Col>
-              ))}
-            </Row>
-            <Button type="primary" onClick={onDeleteComponent}>
-              Hapus Komponen
-            </Button>
+            <Gap height={32} />
+
+            {/* Choose Number */}
+            <ChooseSection
+              title="Pilih Tipe Nomor Punggung"
+              active={activeNumber}
+              chosed={SECTION_SELECTED.Number}
+              data={NumberJersey}
+              onChooseChange={onChooseChange}
+            />
+
+            <Gap height={32} />
+
+            {/* Choose Font */}
+            <ChooseSection
+              title="Pilih Tipe Tulisan"
+              active={activeFont}
+              chosed={SECTION_SELECTED.Font}
+              data={FontsJersey}
+              onChooseChange={onChooseChange}
+            />
+
+            <Gap height={32} />
+
+            <div style={{ background: 'white', paddingTop: 16 }}>
+              <Button
+                onClick={onClickNext}
+                style={{ width: '100%' }}
+                size="large"
+                type="primary"
+              >
+                Selanjutnya
+              </Button>
+            </div>
+          </Col>
+
+          <Col>
+            <img src={base64Jersey} alt="asdasd" />
           </Col>
         </Row>
       </Layout>

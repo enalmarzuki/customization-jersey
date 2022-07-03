@@ -42,4 +42,24 @@
     background: rgb(199, 199, 199);
     transition: all 0.3s ease-in-out;
   }
+
+  .right-content {
+    max-height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .btn-wrappertasd {
+    background: red;
+    padding: 24;
+  }
+
+  .config-img-wrapper {
+    display: flex;
+    align-items: center;
+  }
 }
