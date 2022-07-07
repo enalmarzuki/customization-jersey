@@ -3,6 +3,7 @@ import { fabric } from 'fabric';
 import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import Gap from '../../Components/Reusables/Gap';
 import Layout from '../../Components/Reusables/Layout';
 import Navbar from '../../Components/Reusables/Navbar';
@@ -13,7 +14,9 @@ import {
   NumberJersey,
 } from '../../Data/Dummy/Constans/Customuzation';
 import { ChooseSection } from './Components/ChooseSection/ChooseSection';
+import { OrderForm } from './Components/OrderForm/OrderForm';
 import Styles from './Customization.module.scss';
+import { useCustomization } from './Hooks/useCustomization';
 
 const { Title } = Typography;
 
@@ -25,13 +28,15 @@ export const SECTION_SELECTED = {
 };
 
 const Customization: React.FC = () => {
-  const [text, setText] = useState('');
-  const [active, setActive] = useState(0);
+  const navigate = useNavigate();
+  const useCustomizationHooks = useCustomization();
+
   const [activeNeck, setActiveNeck] = useState(0);
   const [activeArm, setActiveArm] = useState(0);
   const [activeNumber, setActiveNumber] = useState(0);
   const [activeFont, setActiveFont] = useState(0);
   const [base64Jersey, setBase64Jersey] = useState<any>();
+  const [isOrderForm, setIsOrderForm] = useState(false);
 
   const storeMotive = useSelector((state: any) => state.MotivePageStore);
 
@@ -93,7 +98,7 @@ const Customization: React.FC = () => {
   };
 
   const onUploadImage = (e: any) => {
-    console.log('e.target.files[0]', e.target.files[0]);
+    console.log('e.target.files[0]', e.target.files);
     var url = URL.createObjectURL(e.target.files[0]);
     console.log('url', url);
     fabric.Image.fromURL(url, (img) => {
@@ -157,6 +162,8 @@ const Customization: React.FC = () => {
 
     console.log('dataUrl >>', dataUrl);
     console.log('blob >>', blob);
+
+    setIsOrderForm(true);
   };
 
   useEffect(() => {
@@ -167,96 +174,100 @@ const Customization: React.FC = () => {
   return (
     <div className={Styles['container']}>
       <Navbar isActive={'Home'} />
-      <Layout>
-        <Row>
-          <Col span={9}>
-            <div className={Styles['canvas-wrapper']}>
-              <FabricJSCanvas
-                className={Styles['canvas-preview']}
-                onReady={onCanvasReady}
-              />
-            </div>
-          </Col>
-          <Col className={Styles['right-content']} span={12} offset={3}>
-            <div>
-              <Title level={3} className={Styles['title-home']}>
-                Masukkan Gambar
-              </Title>
-              <div className={Styles['config-img-wrapper']}>
-                <input
-                  name={`text`}
-                  type="file"
-                  accept="image/*"
-                  onChange={onUploadImage}
+      {!isOrderForm ? (
+        <Layout>
+          <Row>
+            <Col span={9}>
+              <div className={Styles['canvas-wrapper']}>
+                <FabricJSCanvas
+                  className={Styles['canvas-preview']}
+                  onReady={onCanvasReady}
                 />
-                <Button danger onClick={onDeleteComponent}>
-                  Hapus Komponen
+              </div>
+            </Col>
+            <Col className={Styles['right-content']} span={12} offset={3}>
+              <div>
+                <Title level={3} className={Styles['title-home']}>
+                  Masukkan Gambar
+                </Title>
+                <div className={Styles['config-img-wrapper']}>
+                  <input
+                    name={`text`}
+                    type="file"
+                    accept="image/*"
+                    onChange={onUploadImage}
+                  />
+                  <Button danger onClick={onDeleteComponent}>
+                    Hapus Komponen
+                  </Button>
+                </div>
+              </div>
+              <Gap height={24} />
+
+              {/* Choose Neck */}
+              <ChooseSection
+                title="Pilih Kerah Jersey"
+                active={activeNeck}
+                chosed={SECTION_SELECTED.Neck}
+                data={NecksJersey}
+                onChooseChange={onChooseChange}
+              />
+
+              <Gap height={32} />
+
+              {/* Choose Arm */}
+              <ChooseSection
+                title="Pilih Lengan"
+                active={activeArm}
+                chosed={SECTION_SELECTED.Arm}
+                data={ArmJersey}
+                onChooseChange={onChooseChange}
+              />
+
+              <Gap height={32} />
+
+              {/* Choose Number */}
+              <ChooseSection
+                title="Pilih Tipe Nomor Punggung"
+                active={activeNumber}
+                chosed={SECTION_SELECTED.Number}
+                data={NumberJersey}
+                onChooseChange={onChooseChange}
+              />
+
+              <Gap height={32} />
+
+              {/* Choose Font */}
+              <ChooseSection
+                title="Pilih Tipe Tulisan"
+                active={activeFont}
+                chosed={SECTION_SELECTED.Font}
+                data={FontsJersey}
+                onChooseChange={onChooseChange}
+              />
+
+              <Gap height={32} />
+
+              <div style={{ background: 'white', paddingTop: 16 }}>
+                <Button
+                  onClick={onClickNext}
+                  style={{ width: '100%' }}
+                  size="large"
+                  type="primary"
+                >
+                  Selanjutnya
                 </Button>
               </div>
-            </div>
-            <Gap height={24} />
+            </Col>
 
-            {/* Choose Neck */}
-            <ChooseSection
-              title="Pilih Kerah Jersey"
-              active={activeNeck}
-              chosed={SECTION_SELECTED.Neck}
-              data={NecksJersey}
-              onChooseChange={onChooseChange}
-            />
-
-            <Gap height={32} />
-
-            {/* Choose Arm */}
-            <ChooseSection
-              title="Pilih Lengan"
-              active={activeArm}
-              chosed={SECTION_SELECTED.Arm}
-              data={ArmJersey}
-              onChooseChange={onChooseChange}
-            />
-
-            <Gap height={32} />
-
-            {/* Choose Number */}
-            <ChooseSection
-              title="Pilih Tipe Nomor Punggung"
-              active={activeNumber}
-              chosed={SECTION_SELECTED.Number}
-              data={NumberJersey}
-              onChooseChange={onChooseChange}
-            />
-
-            <Gap height={32} />
-
-            {/* Choose Font */}
-            <ChooseSection
-              title="Pilih Tipe Tulisan"
-              active={activeFont}
-              chosed={SECTION_SELECTED.Font}
-              data={FontsJersey}
-              onChooseChange={onChooseChange}
-            />
-
-            <Gap height={32} />
-
-            <div style={{ background: 'white', paddingTop: 16 }}>
-              <Button
-                onClick={onClickNext}
-                style={{ width: '100%' }}
-                size="large"
-                type="primary"
-              >
-                Selanjutnya
-              </Button>
-            </div>
-          </Col>
-
-          <Col>
-            <img src={base64Jersey} alt="asdasd" />
-          </Col>
-        </Row>
-      </Layout>
+            <Col>
+              <img src={base64Jersey} alt="asdasd" />
+            </Col>
+          </Row>
+        </Layout>
+      ) : (
+        <OrderForm formik={useCustomizationHooks.formik} />
+      )}
     </div>
   );
 };

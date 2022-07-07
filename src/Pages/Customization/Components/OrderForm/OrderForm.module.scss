@@ -1,0 +1,65 @@
+@import '../../../../Data/Variables.scss';
+
+.container {
+  .label-input {
+    color: $Black;
+    font-size: 1rem;
+  }
+
+  .input-text {
+    border-radius: 6px;
+
+    &::placeholder {
+      font-style: italic;
+      font-size: 0.85rem;
+    }
+  }
+
+  .btn-delete {
+    border-radius: 6px;
+  }
+
+  .line-form {
+    border-top: 0.2px solid $GreyPrimary;
+    margin: 16px 0;
+  }
+
+  .add-player {
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    color: $PrimaryGreen;
+    font-size: 0.85rem;
+
+    .line-form {
+      border-top: 0.2px solid $PrimaryGreen;
+      margin: 16px 0;
+      flex: 1;
+
+      &:first-child {
+        margin-right: 1rem;
+      }
+
+      &:last-child {
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .btn-order {
+    background: $PrimaryGreen;
+    border: none;
+    width: 100%;
+    border-radius: 4px;
+
+    &:hover {
+      background: $SecondaryGreen;
+    }
+
+    &:disabled {
+      background: rgb(221, 221, 221);
+    }
+  }
+}
