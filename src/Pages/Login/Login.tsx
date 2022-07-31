@@ -24,7 +24,7 @@ const Login: React.FC = () => {
           <Gap height={16} />
           <Row justify="center">
             <Col span={24}>
-              <FormLogin formik={form.formik} />
+              <FormLogin formik={form.formik} isLoading={form.isLoading} />
             </Col>
           </Row>
         </Col>

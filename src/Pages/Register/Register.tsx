@@ -25,7 +25,7 @@ const Register: React.FC = () => {
           <Gap height={16} />
           <Row justify="center">
             <Col span={24}>
-              <FormRegister formik={form.formik} />
+              <FormRegister formik={form.formik} isLoading={form.isLoading} />
             </Col>
           </Row>
         </Col>

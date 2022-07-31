@@ -20,14 +20,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f6f6f6;
+    background: #b4b4b4;
     border-radius: 50%;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
 
     &:hover {
       cursor: pointer;
-      background: rgb(199, 199, 199);
+      background: rgb(165, 165, 165);
     }
 
     img {

@@ -15,6 +15,34 @@
     }
   }
 
+  .img-cloth-wrapper {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    overflow: hidden;
+
+    &-active {
+      width: 200px;
+      height: 200px;
+      border-radius: 100px;
+      overflow: hidden;
+      border: 2px solid $PrimaryGreen;
+    }
+
+    .img-cloth {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+
+      flex: 1;
+    }
+  }
+
+  .text-description {
+    color: $GreyPrimary;
+    font-size: 0.7rem;
+  }
+
   .btn-delete {
     border-radius: 6px;
   }

@@ -8,11 +8,12 @@ import { Link } from 'react-router-dom';
 
 export interface IFormRegisterProps {
   formik: FormikProps<IUseRegister>;
+  isLoading: boolean;
 }
 
 const { Text } = Typography;
 
-const FormRegister: React.FC<IFormRegisterProps> = ({ formik }) => {
+const FormRegister: React.FC<IFormRegisterProps> = ({ formik, isLoading }) => {
   return (
     <Form id="form-login">
       <div>
@@ -97,6 +98,7 @@ const FormRegister: React.FC<IFormRegisterProps> = ({ formik }) => {
       <Gap height={10} />
 
       <Button
+        loading={isLoading}
         form="form-login"
         size="large"
         className={Styles['btn-login']}
