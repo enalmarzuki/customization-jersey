@@ -100,6 +100,7 @@ const Customization: React.FC = () => {
         fabric.Image.fromURL(
           res.data?.dtMotif.urlDesign || '',
           (img) => {
+            artboard.set(`backgroundImage`, img);
             img.scaleToWidth(editor?.canvas.width || 0);
             img.scaleToHeight(editor?.canvas.height || 0);
             editor?.canvas.renderAll();
@@ -116,6 +117,7 @@ const Customization: React.FC = () => {
     fabric.Image.fromURL(
       selectedMotive?.urlDesign || '',
       (img) => {
+        canvas.set(`backgroundImage`, img);
         img.scaleToWidth(canvas.width);
         img.scaleToHeight(canvas.height);
         canvas.renderAll();
@@ -162,11 +164,7 @@ const Customization: React.FC = () => {
   };
 
   const onUploadImage = (e: any) => {
-    console.log('e.target.files[0]', e.target.files[0]);
     var url = URL.createObjectURL(e.target.files[0]);
-    // useCustomizationHooks.formik.setFieldValue('image', e.target.files[0]);
-
-    console.log('url', url);
     fabric.Image.fromURL(
       url,
       (img) => {
@@ -231,7 +229,7 @@ const Customization: React.FC = () => {
     const base64 = editor?.canvas?.toDataURL({
       quality: 0.5,
     });
-    const tempFile = await urltoFile(base64, 'resultbaju.jpg', 'image/jpg');
+    const tempFile = await urltoFile(base64, 'resultbaju.png', 'image/png');
 
     setBase64Jersey(
       editor?.canvas?.toDataURL({
@@ -343,10 +341,6 @@ const Customization: React.FC = () => {
                   Selanjutnya
                 </Button>
               </div>
-            </Col>
-
-            <Col>
-              <img src={base64Jersey} alt="asdasd" crossOrigin="anonymous" />
             </Col>
           </Row>
         </Layout>

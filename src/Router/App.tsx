@@ -6,6 +6,7 @@ import Register from '../Pages/Register';
 import Motive from '../Pages/Motive';
 import { Provider } from 'react-redux';
 import store from '../Store/store';
+import SuccessBook from '../Pages/SuccessBook';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/motive" element={<Motive />} />
         <Route path="/customization/:idImg" element={<Customization />} />
+        <Route path="/success-book" element={<SuccessBook />} />
       </Routes>
     </Provider>
   );

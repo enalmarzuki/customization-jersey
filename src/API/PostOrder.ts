@@ -4,6 +4,7 @@ import { IUseCustomization } from '../Pages/Customization/Hooks/useCustomization
 export const PostOrder = (value: IUseCustomization) => {
   return new Promise((resolve, reject) => {
     const data = new FormData();
+    data.append('idClient', value.idClient);
     data.append('orderName', value.orderName);
     data.append('orderPhone', value.orderPhone);
     data.append('orderEmail', value.orderEmail);

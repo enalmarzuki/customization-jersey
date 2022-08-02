@@ -19,8 +19,6 @@ export interface IOrderFormProps {
 const { Title, Text } = Typography;
 
 export const OrderForm: React.FC<IOrderFormProps> = ({ formik, isLoading }) => {
-  console.log('formik >>', formik.errors);
-
   const [clothActiveId, setClothActiveId] = useState(0);
 
   return (

@@ -20,8 +20,6 @@ const Motive: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log('motives', motives);
-
   const onClickMotive = (imgUrl: string, idImg: string) => {
     dispatch({ type: SET_MOTIVE, value: imgUrl });
     navigate(`/customization/${idImg}`);

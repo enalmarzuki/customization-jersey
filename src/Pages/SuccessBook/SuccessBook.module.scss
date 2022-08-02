@@ -1,0 +1,27 @@
+@import '../../Data/Variables.scss';
+
+.container {
+  .bank-account-wrapper {
+    display: flex;
+
+    .bank-image {
+      width: 100px;
+    }
+
+    .bank-description-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .bank-account-number {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .bank-account-name {
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
+  }
+}

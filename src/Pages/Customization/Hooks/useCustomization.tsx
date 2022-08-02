@@ -1,8 +1,10 @@
 import { useFormik } from 'formik';
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { PostOrder } from '../../../API/PostOrder';
 import API from '../../../Config/axios';
+import useLocalStorage from '../../../Utils/Hooks/useLocalStorage/useLocalStorage';
 import CustomizationSchema from './useCustomization.validator';
 
 export interface IPlayer {
@@ -12,6 +14,7 @@ export interface IPlayer {
 }
 
 export interface IUseCustomization {
+  idClient: string;
   orderName: string;
   orderEmail: string;
   orderPhone: string;
@@ -25,6 +28,7 @@ export interface IUseCustomization {
 }
 
 const INTIAL_VALUE_FORMIK = {
+  idClient: '',
   orderName: '',
   orderEmail: '',
   orderPhone: '',
@@ -44,6 +48,8 @@ const INTIAL_VALUE_FORMIK = {
 };
 
 export const useCustomization = () => {
+  const [user] = useLocalStorage({ key: 'user', defaultValue: '' });
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const resetFormik = async () => {
     await formik.setValues(INTIAL_VALUE_FORMIK);
@@ -54,16 +60,18 @@ export const useCustomization = () => {
     validationSchema: CustomizationSchema,
     validateOnMount: true,
     onSubmit: async (values) => {
-      console.log('values >>', values);
-
       setIsLoading(true);
       PostOrder(values)
-        .then((res) => console.log('res >>', res))
+        .then(() => navigate('/success-book'))
         .catch((err) => console.log('err', err))
         .finally(() => setIsLoading(false));
     },
     onReset: resetFormik,
   });
+
+  useEffect(() => {
+    formik.setFieldValue('idClient', user.id);
+  }, [user]);
 
   return {
     formik,

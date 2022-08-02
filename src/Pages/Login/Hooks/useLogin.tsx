@@ -3,8 +3,9 @@ import { Axios, AxiosResponse } from 'axios';
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { LoginUser } from '../../../API/Login';
+import { IAxiosResponse, LoginUser } from '../../../API/Login';
 import { INITIAL_VALUE_FORM_LOGIN } from '../../../Data/Constans/Login';
+import useLocalStorage from '../../../Utils/Hooks/useLocalStorage/useLocalStorage';
 import LoginSchema from './useLogin.validator';
 
 export interface IUseLogin {
@@ -14,6 +15,7 @@ export interface IUseLogin {
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [, setUser] = useLocalStorage({ key: 'user', defaultValue: '' });
 
   const navigate = useNavigate();
 
@@ -31,8 +33,9 @@ export const useLogin = () => {
     onSubmit: async (values) => {
       setIsLoading(true);
       LoginUser(values)
-        .then((res) => {
-          navigate('/home', { replace: true });
+        .then((res: any) => {
+          setUser(res.data.data);
+          navigate('/motive', { replace: true });
           return res;
         })
         .catch((err) => {
