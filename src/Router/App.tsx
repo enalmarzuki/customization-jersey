@@ -7,6 +7,7 @@ import Motive from '../Pages/Motive';
 import { Provider } from 'react-redux';
 import store from '../Store/store';
 import SuccessBook from '../Pages/SuccessBook';
+import Order from '../Pages/Order';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/motive" element={<Motive />} />
         <Route path="/customization/:idImg" element={<Customization />} />
+        <Route path="/order" element={<Order />} />
         <Route path="/success-book" element={<SuccessBook />} />
       </Routes>
     </Provider>
