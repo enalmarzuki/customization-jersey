@@ -21,6 +21,10 @@ const { Title, Text } = Typography;
 export const OrderForm: React.FC<IOrderFormProps> = ({ formik, isLoading }) => {
   const [clothActiveId, setClothActiveId] = useState(0);
 
+  const onDisableDates = (currentDate: moment.Moment) => {
+    return currentDate && currentDate < moment().add(7, 'days');
+  };
+
   return (
     <div className={Styles['container']}>
       <Layout>
@@ -88,6 +92,8 @@ export const OrderForm: React.FC<IOrderFormProps> = ({ formik, isLoading }) => {
                       }
                       format="DD MMMM YYYY"
                       className={Styles['input-text']}
+                      disabledDate={onDisableDates}
+                      clearIcon={false}
                     />
                   </div>
                 </div>

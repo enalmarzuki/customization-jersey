@@ -32,7 +32,7 @@ const INTIAL_VALUE_FORMIK = {
   orderName: '',
   orderEmail: '',
   orderPhone: '',
-  pickUpDate: moment().format('YYYY-MM-DD'),
+  pickUpDate: moment().add(8, 'days').format('YYYY-MM-DD'),
   fontPlayerName: '',
   fontBackNumber: '',
   cloth: '',
