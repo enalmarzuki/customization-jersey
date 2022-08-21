@@ -9,8 +9,8 @@ const CustomizationSchema = (): yup.SchemaOf<IUseCustomization> =>
       orderEmail: yup.string().required('Email Pemesan Tidak Boleh Kosong'),
       orderPhone: yup.string().required('Nomor Hp Tidak Boleh Kosong'),
       pickUpDate: yup.string().required('Tanggal Ambil Tidak Boleh Kosong'),
-      fontPlayerName: yup.string().required('Tidak Boleh Kosong'),
-      fontBackNumber: yup.string().required('Tidak Boleh Kosong'),
+      fontPlayerName: yup.string(),
+      fontBackNumber: yup.string(),
       cloth: yup.string().required('Tidak Boleh Kosong'),
       motive: yup.string().required('Tidak Boleh Kosong'),
       players: yup
@@ -19,8 +19,7 @@ const CustomizationSchema = (): yup.SchemaOf<IUseCustomization> =>
         .of(
           yup.object().shape({
             name: yup.string(),
-            backNumber: yup
-              .string(),
+            backNumber: yup.string(),
             size: yup.string().required('Ukuran Tidak Boleh Kosong'),
           })
         ),

@@ -64,6 +64,8 @@ const Customization: React.FC = () => {
 
   const useCustomizationHooks = useCustomization();
 
+  console.log('useCustomizationHooks >>', useCustomizationHooks.formik.errors);
+
   const [activeNeck, setActiveNeck] = useState(1);
   const [activeArm, setActiveArm] = useState(1);
   const [activeNumber, setActiveNumber] = useState(0);

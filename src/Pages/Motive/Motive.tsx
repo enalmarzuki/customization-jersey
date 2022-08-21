@@ -18,11 +18,19 @@ const { Title, Text } = Typography;
 
 const skeletonSize = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+const LoadingComponent: React.FC = () => {
+  return (
+    <div style={{ width: 320, height: 250, backgroundColor: 'gray' }}>
+      Loading...
+    </div>
+  );
+};
+
 const Motive: React.FC = () => {
   const { motives, isLoading } = useMotive();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(" motives >>", motives)
+  console.log(' motives >>', motives);
 
   const onClickMotive = (imgUrl: string, idImg: string) => {
     dispatch({ type: SET_MOTIVE, value: imgUrl });
@@ -59,21 +67,34 @@ const Motive: React.FC = () => {
                     }
                   >
                     <LazyLoadImage
+                      wrapperProps={{ style: { minHeight: 200 } }}
+                      wrapperClassName="card-lazy-wrapper"
+                      key={motive.idDesign}
                       className={Styles['card-rekomendasi-img']}
                       alt={motive.idDesign}
                       src={motive.urlDesign}
                       effect="blur"
-                      width="320px"
-                      height="250px"
+                      placeholder={<LoadingComponent />}
+                      // placeholderSrc={'Loading...'}
                     />
-                   
+
                     <Gap height={16} />
                     <div className={Styles['title-wrapper']}>
-                    <Text className={Styles['title-motive']}>
-                  Code :      {motive.idDesign}
+                      <Text className={Styles['title-motive']}>
+                        Code : {motive.idDesign}
                       </Text>
-                      <NumberFormat renderText={(value)=> <Text className={Styles['title-motive']}>{value}</Text>} displayType={'text'} thousandSeparator={"."} decimalSeparator={","}  prefix={'Rp. '} value={motive.price ||0} />
-                      
+                      <NumberFormat
+                        renderText={(value) => (
+                          <Text className={Styles['title-motive']}>
+                            {value}
+                          </Text>
+                        )}
+                        displayType={'text'}
+                        thousandSeparator={'.'}
+                        decimalSeparator={','}
+                        prefix={'Rp. '}
+                        value={motive.price || 0}
+                      />
                     </div>
                     <p></p>
                   </div>
