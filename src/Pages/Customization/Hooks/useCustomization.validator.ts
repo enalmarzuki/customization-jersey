@@ -18,10 +18,9 @@ const CustomizationSchema = (): yup.SchemaOf<IUseCustomization> =>
         .min(1, 'Minimal Pesanan 1pcs')
         .of(
           yup.object().shape({
-            name: yup.string().required('Nama Pemain Tidak Boleh Kosong'),
+            name: yup.string(),
             backNumber: yup
-              .string()
-              .required('Nomor Punggung Tidak Boleh Kosong'),
+              .string(),
             size: yup.string().required('Ukuran Tidak Boleh Kosong'),
           })
         ),

@@ -5,6 +5,8 @@ export interface IMotives {
   _id: string;
   idDesign: string;
   urlDesign: string;
+  price: number;
+
 }
 
 export const useMotive = () => {

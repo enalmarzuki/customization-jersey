@@ -10,6 +10,9 @@ import { SET_MOTIVE } from '../../Store/type';
 import { useMotive } from './Hooks/useMotive';
 import Styles from './Motive.module.scss';
 import { MotiveSkeleton } from './MotiveSkeleton';
+import NumberFormat from 'react-number-format';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const { Title, Text } = Typography;
 
@@ -19,6 +22,7 @@ const Motive: React.FC = () => {
   const { motives, isLoading } = useMotive();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log(" motives >>", motives)
 
   const onClickMotive = (imgUrl: string, idImg: string) => {
     dispatch({ type: SET_MOTIVE, value: imgUrl });
@@ -54,17 +58,22 @@ const Motive: React.FC = () => {
                       onClickMotive(motive.urlDesign, motive.idDesign)
                     }
                   >
-                    <img
+                    <LazyLoadImage
                       className={Styles['card-rekomendasi-img']}
-                      src={motive.urlDesign}
                       alt={motive.idDesign}
+                      src={motive.urlDesign}
+                      effect="blur"
+                      width="320px"
+                      height="250px"
                     />
+                   
                     <Gap height={16} />
                     <div className={Styles['title-wrapper']}>
-                      <Text className={Styles['title-motive']}>Motif Code</Text>
-                      <Text className={Styles['title-motive']}>
-                        {motive.idDesign}
+                    <Text className={Styles['title-motive']}>
+                  Code :      {motive.idDesign}
                       </Text>
+                      <NumberFormat renderText={(value)=> <Text className={Styles['title-motive']}>{value}</Text>} displayType={'text'} thousandSeparator={"."} decimalSeparator={","}  prefix={'Rp. '} value={motive.price ||0} />
+                      
                     </div>
                     <p></p>
                   </div>
