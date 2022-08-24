@@ -8,11 +8,11 @@
     padding: 12px;
     cursor: pointer;
 
-    // .card-lazy-wrapper.lazy-load-image-background.blur:not(.lazy-load-image-loaded) {
-    //   display: block !important;
-    //   width: 300px !important;
-    //   height: 300px !important;
-    // }
+    .card-lazy-wrapper.lazy-load-image-background.blur {
+      display: block !important;
+      width: 300px !important;
+      height: 300px !important;
+    }
 
     .lazy-load-image-background {
       display: block !important;

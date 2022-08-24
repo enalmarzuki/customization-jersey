@@ -15,6 +15,7 @@ export const PostOrder = (value: IUseCustomization) => {
     data.append('cloth', value.cloth);
     data.append('players', JSON.stringify(value.players));
     data.append('image', value.image);
+    data.append('price', value.price.toString());
 
     API.post('order/', data)
       .then((res) => resolve(res))

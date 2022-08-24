@@ -2,13 +2,36 @@
 
 .container {
   .canvas-wrapper {
-    height: 80vh;
+    height: 75vh;
     width: 100%;
     background: '#F6F6F6';
 
     .canvas-preview {
       height: 100%;
       width: 100%;
+    }
+  }
+
+  .result-wrapper {
+    display: flex;
+    align-items: center;
+
+    :global {
+      .ant-typography {
+        margin: 0;
+      }
+
+      span.ant-typography {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $GreyPrimary;
+      }
+
+      h5.ant-typography {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: $Black;
+      }
     }
   }
 

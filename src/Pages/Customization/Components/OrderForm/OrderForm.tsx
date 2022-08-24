@@ -20,6 +20,8 @@ const { Title, Text } = Typography;
 
 export const OrderForm: React.FC<IOrderFormProps> = ({ formik, isLoading }) => {
   const [clothActiveId, setClothActiveId] = useState(0);
+  const isNotBackNumber = !formik.values.fontBackNumber;
+  const isNotPlayerName = !formik.values.fontPlayerName;
 
   const onDisableDates = (currentDate: moment.Moment) => {
     return currentDate && currentDate < moment().add(7, 'days');
@@ -148,12 +150,14 @@ export const OrderForm: React.FC<IOrderFormProps> = ({ formik, isLoading }) => {
                                 Nama Pemain
                               </Text>
                               <Input
+                                disabled={isNotPlayerName}
                                 size="large"
                                 name={`players[${index}].name`}
                                 placeholder="ex: Sarmili"
                                 value={player.name}
                                 onChange={formik.handleChange}
                                 className={Styles['input-text']}
+                                autoComplete="off"
                               />
                             </Col>
 
@@ -162,12 +166,14 @@ export const OrderForm: React.FC<IOrderFormProps> = ({ formik, isLoading }) => {
                                 Nomor Punggung
                               </Text>
                               <Input
+                                disabled={isNotBackNumber}
                                 size="large"
                                 name={`players[${index}].backNumber`}
                                 placeholder="ex: 10"
                                 value={player.backNumber}
                                 onChange={formik.handleChange}
                                 className={Styles['input-text']}
+                                autoComplete="off"
                               />
                             </Col>
 
@@ -182,6 +188,7 @@ export const OrderForm: React.FC<IOrderFormProps> = ({ formik, isLoading }) => {
                                 value={player.size}
                                 onChange={formik.handleChange}
                                 className={Styles['input-text']}
+                                autoComplete="off"
                               />
                             </Col>
 

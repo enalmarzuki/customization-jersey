@@ -18,6 +18,7 @@ export interface IMyOrder {
   players: IPlayer[];
   sample: string;
   payStatus: string;
+  price: number;
 }
 
 export const useOrder = () => {

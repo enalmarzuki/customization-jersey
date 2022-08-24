@@ -1,5 +1,5 @@
 import { Col, Row, Skeleton, Typography } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import Gap from '../../Components/Reusables/Gap';
@@ -13,6 +13,8 @@ import { MotiveSkeleton } from './MotiveSkeleton';
 import NumberFormat from 'react-number-format';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import IMGLoading from '../../Assets/images/img-loading.gif';
+import { url } from 'inspector';
 
 const { Title, Text } = Typography;
 
@@ -27,10 +29,10 @@ const LoadingComponent: React.FC = () => {
 };
 
 const Motive: React.FC = () => {
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
   const { motives, isLoading } = useMotive();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(' motives >>', motives);
 
   const onClickMotive = (imgUrl: string, idImg: string) => {
     dispatch({ type: SET_MOTIVE, value: imgUrl });
@@ -67,15 +69,14 @@ const Motive: React.FC = () => {
                     }
                   >
                     <LazyLoadImage
-                      wrapperProps={{ style: { minHeight: 200 } }}
                       wrapperClassName="card-lazy-wrapper"
                       key={motive.idDesign}
                       className={Styles['card-rekomendasi-img']}
                       alt={motive.idDesign}
                       src={motive.urlDesign}
+                      height={290}
                       effect="blur"
-                      placeholder={<LoadingComponent />}
-                      // placeholderSrc={'Loading...'}
+                      placeholderSrc={IMGLoading}
                     />
 
                     <Gap height={16} />

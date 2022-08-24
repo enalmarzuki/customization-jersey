@@ -22,8 +22,9 @@ import {
   NecksJersey,
   NumberJersey,
 } from '../../Data/Constans/Customuzation';
+import NumberFormat from 'react-number-format';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const SECTION_SELECTED = {
   Arm: 'ARM',
@@ -99,6 +100,10 @@ const Customization: React.FC = () => {
     API.get(`/motif/findByIdDesign/${selectedIdMotive}`)
       .then((res) => {
         setSelectedMotive(res.data?.dtMotif);
+        useCustomizationHooks.formik.setFieldValue(
+          'price',
+          res.data?.dtMotif.price
+        );
         fabric.Image.fromURL(
           res.data?.dtMotif.urlDesign || '',
           (img) => {
@@ -197,14 +202,14 @@ const Customization: React.FC = () => {
     } else if (selected === SECTION_SELECTED.Number) {
       setActiveNumber(id);
       useCustomizationHooks.formik.setFieldValue(
-        'fontPlayerName',
+        'fontBackNumber',
         SECTION_NUMBER_JERSEY[id as ObjectKeyBackNumber]
       );
       return setImageToCanvas(currentSrc);
     } else {
       setActiveFont(id);
       useCustomizationHooks.formik.setFieldValue(
-        'fontBackNumber',
+        'fontPlayerName',
         SECTION_NUMBER_JERSEY[id as ObjectKeyPlayerNumber]
       );
       return setImageToCanvas(currentSrc);
@@ -267,6 +272,19 @@ const Customization: React.FC = () => {
                 <FabricJSCanvas
                   className={Styles['canvas-preview']}
                   onReady={onCanvasReady}
+                />
+              </div>
+              <Gap width={20} />
+              <div className={Styles['result-wrapper']}>
+                <Text>Total</Text>
+                <Gap width={16} />
+                <NumberFormat
+                  value={useCustomizationHooks.formik.values.price}
+                  prefix="Rp. "
+                  displayType="text"
+                  thousandSeparator={'.'}
+                  decimalSeparator={','}
+                  renderText={(value) => <Title level={5}>{value}</Title>}
                 />
               </div>
             </Col>

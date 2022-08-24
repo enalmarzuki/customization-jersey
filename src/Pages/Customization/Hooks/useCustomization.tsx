@@ -25,6 +25,7 @@ export interface IUseCustomization {
   motive: string;
   players: IPlayer[];
   image: any;
+  price: number;
 }
 
 const INTIAL_VALUE_FORMIK = {
@@ -45,6 +46,7 @@ const INTIAL_VALUE_FORMIK = {
     },
   ],
   image: '',
+  price: 0,
 };
 
 export const useCustomization = () => {
