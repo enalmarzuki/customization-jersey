@@ -16,10 +16,15 @@ const Menu = [
     text: 'Pesanan',
     link: '/order',
   },
+  {
+    id: 3,
+    text: 'Checkout',
+    link: '/checkout',
+  },
 ];
 
 export interface INavbarProps {
-  isActive: 'Home' | 'Pesanan';
+  isActive: 'Home' | 'Pesanan' | 'Checkout';
 }
 
 const { Text } = Typography;
@@ -35,7 +40,7 @@ const Navbar: React.FC<INavbarProps> = ({ isActive }) => {
             <img src={Logo} alt="logo.png" />
           </div>
         </Col>
-        <Col span={3}>
+        <Col span={4}>
           <div className={Styles['menu-wrapper']}>
             {Menu.map((item) => {
               return (

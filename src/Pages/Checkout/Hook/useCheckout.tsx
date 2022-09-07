@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { GetMyCheckout } from '../../../API/GetMyCheckout';
 import { GetMyOrder } from '../../../API/GetMyOrder';
 import API from '../../../Config/axios';
 import useLocalStorage from '../../../Utils/Hooks/useLocalStorage/useLocalStorage';
 import { IPlayer } from '../../Customization/Hooks/useCustomization';
 
-export interface IMyOrder {
+export interface IMyCheckout {
   _id: string;
   idClient: string;
   orderEmail: string;
@@ -22,21 +23,21 @@ export interface IMyOrder {
   process?: string;
 }
 
-export const useOrder = () => {
-  const [user, setUser] = useLocalStorage({ key: 'user', defaultValue: '' });
+export const useCheckout = () => {
+  const [user] = useLocalStorage({ key: 'user', defaultValue: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const [myOrders, setMyOrders] = useState<IMyOrder[]>();
+  const [myCheckout, setMyCheckout] = useState<IMyCheckout[]>();
 
   useEffect(() => {
     setIsLoading(true);
-    GetMyOrder(user.id)
-      .then((res: any) => setMyOrders(res.data.data))
+    GetMyCheckout(user.id)
+      .then((res: any) => setMyCheckout(res.data.data))
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   }, []);
 
   return {
-    myOrders,
+    myCheckout,
     isLoading,
   };
 };

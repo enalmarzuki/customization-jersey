@@ -17,7 +17,7 @@ import Gap from '../../Components/Reusables/Gap';
 import useLocalStorage from '../../Utils/Hooks/useLocalStorage/useLocalStorage';
 import { IMyOrder, useOrder } from './Hook/useOrder';
 import { Loading } from '../../Components/Reusables/Loading/Loading';
-import { CardOrder } from './Components/CardOrder/CardOrder';
+import { CardOrder } from '../../Components/Reusables/CardOrder/CardOrder';
 import { UploadOutlined } from '@ant-design/icons';
 import API from '../../Config/axios';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -108,6 +108,7 @@ const Order = () => {
                   <CardOrder
                     data={item}
                     onClick={(e) => onShowPaymentReceipt(e, item)}
+                    onShowModal={() => {}}
                   />
                 </div>
               </Col>
