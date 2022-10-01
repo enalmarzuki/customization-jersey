@@ -21,6 +21,11 @@ const Menu = [
     text: 'Checkout',
     link: '/checkout',
   },
+  {
+    id: 3,
+    text: 'Logout',
+    link: '/',
+  },
 ];
 
 export interface INavbarProps {
@@ -40,13 +45,17 @@ const Navbar: React.FC<INavbarProps> = ({ isActive }) => {
             <img src={Logo} alt="logo.png" />
           </div>
         </Col>
-        <Col span={4}>
+        <Col span={6}>
           <div className={Styles['menu-wrapper']}>
             {Menu.map((item) => {
               return (
                 <Text
                   key={item.id}
-                  onClick={() => navigate(item.link)}
+                  onClick={() =>
+                    navigate(item.link, {
+                      replace: item.link === '/',
+                    })
+                  }
                   className={
                     Styles[
                       `${
