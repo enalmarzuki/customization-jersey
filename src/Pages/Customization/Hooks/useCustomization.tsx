@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { useFormik } from 'formik';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
@@ -64,7 +65,10 @@ export const useCustomization = () => {
     onSubmit: async (values) => {
       setIsLoading(true);
       PostOrder(values)
-        .then(() => navigate('/success-book'))
+        .then(() => {
+          message.success('Berhasil Membuat Pesanan');
+          navigate('/motive');
+        })
         .catch((err) => console.log('err', err))
         .finally(() => setIsLoading(false));
     },
