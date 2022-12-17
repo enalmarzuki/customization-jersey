@@ -1,15 +1,15 @@
-import { EditOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Tooltip, Typography } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import moment from 'moment';
-import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-import NumberFormat from 'react-number-format';
-import IMGLoading from '../../../Assets/images/img-loading.gif';
-import { IMyOrder } from '../../../Pages/Order/Hook/useOrder';
-import Gap from '../Gap';
-import Styles from './CardOrder.module.scss';
+import { EditOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Tooltip, Typography } from "antd";
+import { CheckboxChangeEvent } from "antd/lib/checkbox";
+import moment from "moment";
+import React from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import NumberFormat from "react-number-format";
+import IMGLoading from "../../../Assets/images/img-loading.gif";
+import { IMyOrder } from "../../../Pages/Order/Hook/useOrder";
+import Gap from "../Gap";
+import Styles from "./CardOrder.module.scss";
 
 export interface ICardOrderProps {
   data: IMyOrder | any;
@@ -26,9 +26,10 @@ export const CardOrder: React.FC<ICardOrderProps> = ({
   onShowModal,
   isCheckout,
 }) => {
+  console.log("data >>", data);
   return (
-    <div className={Styles['card-wrapper']}>
-      <div className={Styles['card-img-wrapper']}>
+    <div className={Styles["card-wrapper"]}>
+      <div className={Styles["card-img-wrapper"]}>
         <LazyLoadImage
           key={data._id}
           alt={data._id}
@@ -41,15 +42,15 @@ export const CardOrder: React.FC<ICardOrderProps> = ({
       </div>
       <Gap width={16} />
 
-      <div className={Styles['card-content']}>
-        <div className={Styles['card-body']}>
-          <div className={Styles['card-body-header']}>
-            <div className={Styles['card-body-text-wrapper']}>
+      <div className={Styles["card-content"]}>
+        <div className={Styles["card-body"]}>
+          <div className={Styles["card-body-header"]}>
+            <div className={Styles["card-body-text-wrapper"]}>
               {isCheckout && (
                 <>
                   <Text
-                    className={`${Styles['status-payment']} ${
-                      Styles[data.payStatus.toLowerCase().replace(' ', '-')]
+                    className={`${Styles["status-payment"]} ${
+                      Styles[data.payStatus.toLowerCase().replace(" ", "-")]
                     }`}
                   >
                     {data.payStatus}
@@ -60,8 +61,8 @@ export const CardOrder: React.FC<ICardOrderProps> = ({
 
               {!isCheckout && (
                 <>
-                  <Text className={Styles['card-body-text']}>Nama Pemesan</Text>
-                  <Text className={Styles['card-body-title']}>
+                  <Text className={Styles["card-body-text"]}>Nama Pemesan</Text>
+                  <Text className={Styles["card-body-title"]}>
                     {data.orderName}
                   </Text>
                 </>
@@ -73,10 +74,10 @@ export const CardOrder: React.FC<ICardOrderProps> = ({
                 <Checkbox
                   style={{
                     display:
-                      data.payStatus === 'Sudah Terbayar' ? 'none' : 'block',
+                      data.payStatus === "Sudah Terbayar" ? "none" : "block",
                   }}
                   onChange={(e) => onClick(e)}
-                  disabled={data.payStatus === 'Sudah Terbayar'}
+                  disabled={data.payStatus === "Sudah Terbayar"}
                 />
               </Tooltip>
             ) : (
@@ -90,32 +91,46 @@ export const CardOrder: React.FC<ICardOrderProps> = ({
           </div>
 
           <Gap height={16} />
-          <div className={Styles['card-body-text-wrapper']}>
-            <Text className={Styles['card-body-text']}>Tanggal Ambil</Text>
-            <Text className={Styles['card-body-title']}>
-              {moment(data.pickUpDate).format('DD MMMM YYYY')}
+          <div className={Styles["card-body-text-wrapper"]}>
+            <Text className={Styles["card-body-text"]}>Tanggal Ambil</Text>
+            <Text className={Styles["card-body-title"]}>
+              {moment(data.pickUpDate).format("DD MMMM YYYY")}
             </Text>
           </div>
+
           <Gap height={16} />
-          <div className={Styles['card-body-text-wrapper']}>
-            <Text className={Styles['card-body-text']}>Total</Text>
+          <div className={Styles["card-body-text-wrapper"]}>
+            <Text className={Styles["card-body-text"]}>Total</Text>
+            <Text className={Styles["card-body-title"]}>
+              {data?.players?.length ||
+                data?.detailOrder?.[0]?.players?.length ||
+                0}{" "}
+              Pcs
+            </Text>
             <NumberFormat
               renderText={(value) => (
-                <Text className={Styles['card-body-title']}>{value}</Text>
+                <Text className={Styles["card-body-title"]}>{value}</Text>
               )}
-              displayType={'text'}
-              thousandSeparator={'.'}
-              decimalSeparator={','}
-              prefix={'Rp. '}
+              displayType={"text"}
+              thousandSeparator={"."}
+              decimalSeparator={","}
+              prefix={"Rp. "}
               value={data.price || 0}
             />
           </div>
           <Gap height={16} />
+          <div className={Styles["card-body-text-wrapper"]}>
+            <Text className={Styles["card-body-text"]}>Tanggal Ambil</Text>
+            <Text className={Styles["card-body-title"]}>
+              {moment(data.pickUpDate).format("DD MMMM YYYY")}
+            </Text>
+          </div>
+          <Gap height={16} />
           {!isCheckout && (
-            <div className={Styles['card-body-text-wrapper']}>
-              <Text className={Styles['card-body-text']}>Status</Text>
-              <Text className={Styles['card-body-title']}>
-                {data?.process || '-'}
+            <div className={Styles["card-body-text-wrapper"]}>
+              <Text className={Styles["card-body-text"]}>Status</Text>
+              <Text className={Styles["card-body-title"]}>
+                {data?.process || "-"}
               </Text>
             </div>
           )}

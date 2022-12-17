@@ -10,6 +10,7 @@ import RegisterSchema from './useRegister.validator';
 export interface IUseRegister {
   email: string;
   password: string;
+  confirmPassword: string;
   username: string;
   phoneNumber: string;
 }
@@ -33,6 +34,7 @@ export const useRegister = () => {
   const formik = useFormik<IUseRegister>({
     initialValues: INITIAL_VALUE_FORM_REGISTER,
     validationSchema: RegisterSchema,
+    validateOnChange: true,
     onSubmit: async (values) => {
       setIsLoading(true);
       RegisterUser(values)

@@ -74,6 +74,26 @@ const FormRegister: React.FC<IFormRegisterProps> = ({ formik, isLoading }) => {
           </>
         )}
       </div>
+      <Gap height={10} />
+
+      <div>
+        <Text>Ulang Kata Sandi</Text>
+        <Gap height={6} />
+        <Input.Password
+          name="confirmPassword"
+          size="large"
+          onChange={formik.handleChange}
+          placeholder="Ketik disini"
+          autoComplete="off"
+        />
+
+        {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+          <>
+            <Gap height={2} />
+            <Text type="danger">{formik.errors.confirmPassword}</Text>
+          </>
+        )}
+      </div>
 
       <Gap height={10} />
 

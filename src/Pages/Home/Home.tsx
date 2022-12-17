@@ -61,8 +61,10 @@ const Home: React.FC = () => {
               </div>
             </Col>
           ))}
-        </Row>
+       </Row>
       </Layout>
+  
+
     </div>
   );
 };
