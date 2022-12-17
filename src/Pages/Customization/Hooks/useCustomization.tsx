@@ -36,7 +36,7 @@ export const useCustomization = () => {
     idClient: user.id,
     orderName: user.name,
     orderEmail: user.email,
-    orderPhone: "",
+    orderPhone: user.phone,
     pickUpDate: moment().add(8, "days").format("YYYY-MM-DD"),
     fontPlayerName: "",
     fontBackNumber: "",
